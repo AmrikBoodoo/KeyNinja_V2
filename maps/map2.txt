@@ -1,19 +1,19 @@
-# Map file for tile-based game 
+# Map file for tile-based game
 # (Lines that start with '#' are comments)
 # The tiles are:
 #   (Space) Empty tile
-#   A..Z    Tiles A through Z
-#   o       Star
-#   !       Music Note
-#   *       Goal
-#   1       Bad Guy 1 (grub)
-#   2       Bad Guy 2 (fly)
-AD                      o o o                I                   EBBBBBBBBBBBBBF     o o o o  CA
-AD                     IIIIIII               I                   CAAAAAAAAAAAAAD    o o o o o CA
-AD                                           I             o o   CAAAAAAAAAAAAAHF    o o o o  CA
-AD                    2   !        2                      IIIII  CAAAAAAAAAAAAAAD   o o o o o CA
-AD                      IIIII                                    CAAAAAAAAAAAAAAHF   IIIIIII  CA
-AD         III                          1    1  1        2       CAAAAAAAAAAAAAAAD  o o o o o CA
-AD                            1      IIIIIIIIIIIII               CAAAAAAAAAAAAAAAHF  o o o o  CA
-AD                   BBBBBBBBBBBBBBF     o o o o o o           * CAAAAAAAAAAAAAAAAD o o o o o CA
-AHBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAHBBBBBBBBBBBGA
+#   S    coin
+#   R    Diamond   
+#   N    gold key
+#   O    silver key
+#   U    enemy ghost sprite
+#   P    Door  
+AD       R                                                     S       S     
+AD       I                                                     I       I     KBBL   I       
+AD                                    KBBL      KBBL                                   CAAD         CAA
+AD    I      SS                       CAADE     CAAAB     I        S                   CAADE    S   CAA
+AD          KBBL  S       M    I  I   CAAD      CAAAAB       S     I                   CAAD    I    CAA
+AD                S       M           CAAD S   ECAAAAAB      I              S    S     CAAD        ZCAA
+AD      Z         S       M    S   S  CAAD      CAAAAAAB               S            N SCAAD       ZZCAA
+AD     ZZ    W            M  S    U OTCAADE U R CAAAAAAAB                        T     CAAD N UP ZZZCAA 
+AHBBBBBBBBBBBBBBGAAD    KAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBGAALE    E    EKBBHA   BGAAAAHBBBBBBAAAA

@@ -62,7 +62,7 @@ public class SoundManager {
 
 	public Clip getClip (String title) {
 
-		return clips.get(title);		// gets a sound by supplying key
+		return clips.get(title);		
 	}
 
 

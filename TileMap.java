@@ -313,9 +313,9 @@ public class TileMap {
 
                         if (temp.intersectsObject(playerBox, tilesToPixels(x), tilesToPixels(y),offsetX,offsetY)){
                             
-                            player.loseLife();
+                        //    player.loseLife();
                            // soundManager.playSound("hurt", false);
-                           player.respawnAfterHurt();
+                        //   player.respawnAfterHurt();
 
                         }
 

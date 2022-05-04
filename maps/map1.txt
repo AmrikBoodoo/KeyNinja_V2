@@ -2,18 +2,18 @@
 # (Lines that start with '#' are comments)
 # The tiles are:
 #   (Space) Empty tile
-#   A..Z    Tiles A through Z
-#   o       Star
-#   !       Music Note
-#   *       Goal
-#   1       Bad Guy 1 (grub)
-#   2       Bad Guy 2 (fly)                            
-                                        S U O T
-                             S M     I FKBBBBBBL 
-                             S M
-       SSSS         III     FKBBBL              S    P        R
-  RS  IIIIIII    I                           S    FKBL        I
-  II                               S   S U S   S                      NT
-                       SS          I   I   I   I                    KBBBL
-         SS   BB    S      N         O             P           KL   CAAAD
-BBBBBL KBBBGD AABBBBBBBBBBBBBBGD  CHBBBBBBBBBBBBBBBBGD   KBL   CD   CAAAD   
+#   S    coin
+#   R    Diamond   
+#   N    gold key
+#   O    silver key
+#   U    enemy ghost sprite
+#   P    Door                            
+D                                       S U O T               TO                    C
+D                            S M     I FKBBBBBBL             KBBL                   C
+D                            S M                                 R    I   I         C
+D      SSSS         III     FKBBBL              S    P                          U   C
+D RS  IIIIIII    I                           S    FKBL                       KBBBL  C
+D II                               S   S   S   S                                    C
+D                      SS          I   I   I   I                     KBBBL          C
+D        SS   BB    S      N         O     U                   KL    CAAAD        P C
+BBBBBL KBBBGD AABBBBBBBBBBBBBBGD  CHBBBBBBBBBBBBBBBBGD   KBL   CD    CAAAD          C

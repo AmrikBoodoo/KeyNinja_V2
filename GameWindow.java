@@ -196,7 +196,7 @@ public class GameWindow extends JFrame implements
 			hud.drawButtons(imageContext, tileMap, isOverQuitButton, isOverMenuStartButton, isOverLevelButton,isOverMenuButton);
 
 		}
-		if (tileMap.getLevelComplete()){   //LEVEL COMPLETED
+		if (tileMap.getLevelComplete() && isLvl1){   //LEVEL COMPLETED
 			isLvl1=false;
 			soundManager.stopSound("backgroundLevel1");
 			soundManager.playSound("backgroundLevel2", true);
@@ -205,10 +205,19 @@ public class GameWindow extends JFrame implements
 			gameOverMessage(imageContext,true);
 		}
 
+		if (tileMap.getLevelComplete() && !isLvl1){   //LEVEL COMPLETED
+			isLvl1=false;
+			soundManager.stopSound("backgroundLevel2");
+			soundManager.playSound("backgroundMenu", true);
+			bgManager= tempBgManager;
+			lvl1Complete=true;
+			isMenu=true;
+			gameOverMessage(imageContext,true);
+		}
+
+
 		if (tileMap.getLives()==0){       //GAME OVER
-	//		isMenu= true;
-	//		soundManager.stopSound("backgroundLevel1");
-	//		soundManager.playSound("backgroundMenu", true);
+
 			gameOverMessage(imageContext,false);
 			restartLevels();
 		}
@@ -321,7 +330,7 @@ public class GameWindow extends JFrame implements
 
 
 
-	// Specify screen areas for the buttons and create bounding rectangles
+	
 
 
 
@@ -375,7 +384,7 @@ public class GameWindow extends JFrame implements
 		String msg="";
 
 		if (win){
-			 msg = "Level Complete! Score: " + tileMap.getPlayerScore()+ "  Onto the next level....";
+			 msg = "Level Complete! Score: " + tileMap.getPlayerScore()+ "  loading....";
 		}
 		else{
 			 msg = "Level Lost :(  Try Again! Score: " + tileMap.getPlayerScore() + "  Restarting Level....";
