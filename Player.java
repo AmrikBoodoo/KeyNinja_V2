@@ -347,19 +347,26 @@ public class Player {
    }
 
    public boolean silverKeyCollected(){
-      if (silverKeyCollected){
-         return true;
-      }
-
-      return false;
+      return silverKeyCollected;
    }
 
    public boolean goldKeyCollected(){
-      if (goldKeyCollected){
+     return goldKeyCollected;
+   }
+
+   public boolean canEnterDoor(){
+      if (goldKeyCollected && silverKeyCollected){
          return true;
       }
-
       return false;
+   }
+
+   public void addDiff(){
+      y=y-44;
+   }
+
+   public void respawnAfterHurt(){
+      x= x-128; //2 blocks
    }
 
 }

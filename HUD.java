@@ -1,9 +1,7 @@
 import javax.swing.*;			// need this for GUI objects
 import java.awt.*;			// need this for certain AWT classes
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.awt.event.*;
-import java.awt.image.BufferStrategy;	// need this to implement page flipping
+
 
 public class HUD {
 
@@ -131,19 +129,19 @@ public class HUD {
 	
 
 		if (isOverQuitButton){
-		   g.drawImage(quit1Image, quitButtonArea.x, quitButtonArea.y, 160, 40, null);
+		   g.drawImage(quit1Image, quitButtonArea.x, quitButtonArea.y, quitButtonArea.width, quitButtonArea.height, null);
 		    	       
 		}		
 		else{
-		   g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, 160, 40, null);
+		   g.drawImage(quit2Image, quitButtonArea.x, quitButtonArea.y, quitButtonArea.width, quitButtonArea.height, null);
 		    	       
 		}	
 		if (isOverMenuButton){
-			g.drawImage(menuButtonImage, menuButtonArea.x, menuButtonArea.y, 160, 40, null);
+			g.drawImage(menuButtonImage, menuButtonArea.x, menuButtonArea.y,  menuButtonArea.width, menuButtonArea.height, null);
 		}						   
 							
 		else{
-			g.drawImage(menuButtonImage2, menuButtonArea.x, menuButtonArea.y, 160, 40, null);
+			g.drawImage(menuButtonImage2, menuButtonArea.x, menuButtonArea.y, menuButtonArea.width, menuButtonArea.height, null);
 		}						   				   
 
 		

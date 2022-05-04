@@ -128,6 +128,10 @@ public class TileMapManager {
                     else if (tile==20 ){ // U-A =85-65= 20 ghost enemy
                         newMap.setTileKey("enemy", x, y);
                     }
+
+                    else{
+                        newMap.setTileKey("Ground",x,y);
+                    }
                 //    Rectangle2D.Double temp= new Rectangle2D.Double(x,y,tempx,tempy);
                     
                     

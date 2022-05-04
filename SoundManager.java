@@ -42,6 +42,12 @@ public class SoundManager {
 
 		clip = loadClip("sounds/key.wav");
 		clips.put("key", clip);	
+
+	//	clip = loadClip("sounds/mystical.wav");
+	//	clips.put("mystical", clip);	
+
+	//	clip = loadClip("sounds/hurt.wav");
+	//	clips.put("hurt", clip);
 		
 	}
 

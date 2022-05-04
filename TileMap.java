@@ -32,7 +32,9 @@ public class TileMap {
     private boolean playerJumping;
     private boolean jumpRight;
     private boolean jumpLeft;
-
+    private boolean level1Complete;
+    private boolean playerFalling;
+    private boolean touchedFloor;
 
 
 
@@ -58,6 +60,7 @@ public class TileMap {
     jumpCounter=0;
     jumpRight=false;
     jumpLeft=false;
+    touchedFloor=false;
 
     
     tileObjs= new Tile[mapWidth][mapHeight];
@@ -70,6 +73,8 @@ public class TileMap {
     int playerHeight = 60;
 
     playerJumping=false;
+    playerFalling=false;
+
 
 	int x, y;
 	// x = (dimension.width / 2) + TILE_SIZE;
@@ -80,7 +85,7 @@ public class TileMap {
         player.setX(x);
         player.setY(y);
 
-	System.out.println("Player coordinates: " + x + "," + y);
+        level1Complete=false;
     }
 
 
@@ -285,6 +290,55 @@ public class TileMap {
 
                     }
 
+                    if (temp.returnKey().equals("lockedDoor")){
+
+                        if (temp.intersectsObject(playerBox, tilesToPixels(x), tilesToPixels(y),offsetX,offsetY)){
+                            
+                           
+                           if (player.canEnterDoor()){
+                               level1Complete= true;
+                               //soundManager.playSound("mystical", false);
+                               //change tile image to open door
+                           }
+
+
+           
+                        }
+
+                        
+
+                    }
+
+                    if (temp.returnKey().equals("enemy")){
+
+                        if (temp.intersectsObject(playerBox, tilesToPixels(x), tilesToPixels(y),offsetX,offsetY)){
+                            
+                            player.loseLife();
+                           // soundManager.playSound("hurt", false);
+                           player.respawnAfterHurt();
+
+                        }
+
+                    }
+
+                    if (playerFalling){
+                        if (temp.returnKey().equals("Ground")){
+                
+
+                            if (temp.intersectsGroundObjectTop(playerBox, tilesToPixels(x), tilesToPixels(y),offsetX,offsetY)){
+                                
+                                playerFalling=false;
+                                playerJumping=false;
+                                player.addDiff();
+                    
+                            }
+    
+                            
+                        }
+                    }
+
+
+
 
                     
 
@@ -321,8 +375,11 @@ public class TileMap {
         // draw player
 
         if(playerJumping){
-            jump();
+            jumpUp(playerFalling);
             jumpCounter++;
+        }
+        if (playerFalling){
+            player.moveDown();
         }
         
         
@@ -406,6 +463,7 @@ public class TileMap {
         }
 
         else if (jumpCounter>=4 && jumpCounter<8){
+            playerFalling=true;
             player.moveDown();
         }
 
@@ -420,6 +478,28 @@ public class TileMap {
         jumpRight=false;
 
     }
+
+    public void jumpUp(boolean falling){
+        
+
+        if (!falling){
+            if (jumpCounter<=3){
+                player.moveUp();
+            }
+            else {
+                playerFalling=true;
+                jumpCounter=-1;
+                
+            }
+    
+        }
+
+
+
+    }
+
+
+
 
     public void setPlayerState(int x){
 
@@ -453,15 +533,9 @@ public class TileMap {
         return playerJumping;
     }
 
-    public void setJumpLeft(boolean b){
-        this.jumpLeft= b;
+    public boolean getFallingState(){
+        return playerFalling;
     }
-
-    public void setJumpRight(boolean b){
-        this.jumpRight= b;
-    }
-
-
 
     public int getPlayerScore(){
         return player.getScore();
@@ -486,6 +560,11 @@ public class TileMap {
     public void setTileKey(String s, int x, int y){
         tileObjs[x][y].setKey(s);
     }
+
+    public boolean getLevelComplete(){
+        return level1Complete;
+    }
+
 
 
 }

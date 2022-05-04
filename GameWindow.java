@@ -18,9 +18,6 @@ public class GameWindow extends JFrame implements
 	private Thread gameThread = null;            	// the thread that controls the game
 	private volatile boolean isRunning = false;    	// used to stop the game thread
 
-	private Animation animation = null;		// animation sprite
-	private ImageEffect imageEffect;		// sprite demonstrating an image effect
-
 	private BufferedImage image;			// drawing area for each frame
 
 
@@ -50,11 +47,12 @@ public class GameWindow extends JFrame implements
 	TileMap tileMap2;
 	TileMap tempTileMap;
 
-	private BufferedImage bf;
 
 	private boolean isMenu;
 
 	private boolean isLvl1;
+	private boolean lvl1Complete;
+	private boolean endGameWait;
 
 	private HUD hud;   //Heads up display... also used for all button intialization and drawing
 
@@ -82,6 +80,8 @@ public class GameWindow extends JFrame implements
 
 		isMenu= true;
 		isLvl1= true;
+		lvl1Complete=false;
+		endGameWait=false;
 
 		startGame();
 		soundManager.playSound("backgroundMenu", true);
@@ -97,6 +97,11 @@ public class GameWindow extends JFrame implements
 			while (isRunning) {
 				screenUpdate();
 				Thread.sleep (50);
+
+				if (endGameWait){
+					Thread.sleep(10000);
+				}
+
 			}
 		}
 		catch(InterruptedException e) {}
@@ -135,8 +140,7 @@ public class GameWindow extends JFrame implements
 
 	public void gameUpdate () {
 		
-		animation.update();
-		imageEffect.update();
+	
 	}
 
 
@@ -175,6 +179,7 @@ public class GameWindow extends JFrame implements
 	public void gameRender (Graphics gScr) {		// draw the game objects
 
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
+		endGameWait=false;
 
 		if (isLvl1){
 			tileMap=tempTileMap;
@@ -183,12 +188,28 @@ public class GameWindow extends JFrame implements
 			hud.drawButtons(imageContext, tileMap, isOverQuitButton, isOverMenuStartButton, isOverLevelButton,isOverMenuButton);
 
 		}
-		else{
+		else{		//IS LEVEL 2
 			tileMap= tileMap2;		
-			bgManager2.draw(imageContext);
+			bgManager.draw(imageContext);
 			tileMap.draw(imageContext);
 			hud.drawButtons(imageContext, tileMap, isOverQuitButton, isOverMenuStartButton, isOverLevelButton,isOverMenuButton);
 
+		}
+		if (tileMap.getLevelComplete()){   //LEVEL COMPLETED
+			isLvl1=false;
+			soundManager.stopSound("backgroundLevel1");
+			soundManager.playSound("backgroundLevel2", true);
+			bgManager= bgManager2;
+			lvl1Complete=true;
+			gameOverMessage(imageContext,true);
+		}
+
+		if (tileMap.getLives()==0){       //GAME OVER
+	//		isMenu= true;
+	//		soundManager.stopSound("backgroundLevel1");
+	//		soundManager.playSound("backgroundMenu", true);
+			gameOverMessage(imageContext,false);
+			restartLevels();
 		}
 
 
@@ -346,21 +367,32 @@ public class GameWindow extends JFrame implements
 
 	// displays a message to the screen when the user stops the game
 
-	private void gameOverMessage(Graphics g) {
+	private void gameOverMessage(Graphics g, boolean win) {
 		
-		Font font = new Font("SansSerif", Font.BOLD, 24);
+		Font font = new Font("SansSerif", Font.BOLD, 48);
 		FontMetrics metrics = this.getFontMetrics(font);
+		String msg="";
 
-		String msg = "Game Over. Thanks for playing!";
+		if (win){
+			 msg = "Level Complete! Score: " + tileMap.getPlayerScore()+ "  Onto the next level....";
+		}
+		else{
+			 msg = "Level Lost :(  Try Again! Score: " + tileMap.getPlayerScore() + "  Restarting Level....";
+		}
+		
+		
+
 
 		int x = (pWidth - metrics.stringWidth(msg)) / 2; 
 		int y = (pHeight - metrics.getHeight()) / 2;
 
-		g.setColor(Color.BLUE);
+		g.setColor(Color.BLACK);
 		g.setFont(font);
 		g.drawString(msg, x, y);
+		endGameWait=true;
 
 	}
+
 
 
 
@@ -419,17 +451,6 @@ public class GameWindow extends JFrame implements
            		isRunning = false;		// user can quit anytime by pressing
 			return;				//  one of these keys (ESC, Q, END)			
          	}
-
-		else
-		if (keyCode == KeyEvent.VK_RIGHT && tileMap.getJumpState()) {
-			tileMap.setJumpRight(true);
-		}
-
-		else
-		if (keyCode == KeyEvent.VK_LEFT && tileMap.getJumpState()) {
-			tileMap.setJumpLeft(true);
-		}
-
 		else
 		if (keyCode == KeyEvent.VK_LEFT ) {
 			bgManager.moveLeft();
@@ -441,6 +462,7 @@ public class GameWindow extends JFrame implements
 			bgManager.moveRight();
 			tileMap.moveRight();
 			tileMap.setPlayerState(3);
+			
 		}
 		else
 		if (keyCode == KeyEvent.VK_SPACE) {
