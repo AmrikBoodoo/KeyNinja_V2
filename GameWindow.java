@@ -196,24 +196,25 @@ public class GameWindow extends JFrame implements
 			hud.drawButtons(imageContext, tileMap, isOverQuitButton, isOverMenuStartButton, isOverLevelButton,isOverMenuButton);
 
 		}
-		if (tileMap.getLevelComplete() && isLvl1){   //LEVEL COMPLETED
-			isLvl1=false;
-			soundManager.stopSound("backgroundLevel1");
-			soundManager.playSound("backgroundLevel2", true);
-			bgManager= bgManager2;
-			lvl1Complete=true;
-			gameOverMessage(imageContext,true);
+		if (tileMap.getLevelComplete()){   //LEVEL COMPLETED
+			if (!lvl1Complete){
+				isLvl1=false;
+				soundManager.stopSound("backgroundLevel1");
+				soundManager.playSound("backgroundLevel2", true);
+				bgManager= bgManager2;
+				lvl1Complete=true;
+				gameOverMessage(imageContext,true);
+			}
+			else{
+				soundManager.stopSound("backgroundLevel2");
+				soundManager.playSound("menuBackground", true);
+				isMenu=true;
+				restartLevels();
+				gameOverMessage(imageContext,true);
+			}
+
 		}
 
-		if (tileMap.getLevelComplete() && !isLvl1){   //LEVEL COMPLETED
-			isLvl1=false;
-			soundManager.stopSound("backgroundLevel2");
-			soundManager.playSound("backgroundMenu", true);
-			bgManager= tempBgManager;
-			lvl1Complete=true;
-			isMenu=true;
-			gameOverMessage(imageContext,true);
-		}
 
 
 		if (tileMap.getLives()==0){       //GAME OVER
